@@ -1,9 +1,9 @@
 ## TODO list
-### MrDzik
+### <a href="https://github.com/MrDzik">MrDzik</a>
 * ...
-### Agil-Dev
+### <a href="https://github.com/Agil-Dev">Agil-Dev</a>
 * ...
-### Adrian-Lepek
+### <a href="https://github.com/Adrian-Lepek">Adrian-Lepek</a>
 * ...
-### Dawid-Czyzewski
+### <a href="https://github.com/Dawid-Czyzewski">Dawid-Czyzewski</a>
 * ...
