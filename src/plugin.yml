@@ -1,5 +1,5 @@
 name: AnitAFK
 version: 1.0
 author: [Wiktor Kulczyk, Kamil Pawlaczyk, Dawid Czyzewski, Adrian Lepek]
-main: main.java.com.mrdzik.antiafk.AntiAFK
+main: main.java.com.antiafk.AntiAFK
 api-version: 1.12.2
