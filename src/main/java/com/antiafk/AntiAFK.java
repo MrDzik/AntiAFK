@@ -1,4 +1,4 @@
-package com.mrdzik.antiafk;
+package com.antiafk;
 
 import org.bukkit.plugin.java.JavaPlugin;
 
