@@ -15,9 +15,9 @@ public class AntiAFKEvents implements Listener {
         while (true) {
             double oldX = player.getLocation().getX();
             double oldZ = player.getLocation().getZ();
-            for(int i = 0; i < 10; i++) {
+            for(int i = 0; i < 1; i++) {
                 try {
-                    TimeUnit.SECONDS.sleep(1);
+                    TimeUnit.SECONDS.sleep(5);
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
