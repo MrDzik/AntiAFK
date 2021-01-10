@@ -6,7 +6,6 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
-import java.util.concurrent.TimeUnit;
 
 public class AntiAFKEvents implements Listener {
     @EventHandler
@@ -15,16 +14,15 @@ public class AntiAFKEvents implements Listener {
         while (true) {
             double oldX = player.getLocation().getX();
             double oldZ = player.getLocation().getZ();
-            try {
-                Thread.sleep(5000);
-                if(player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ ) {
-                    player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
-                }
-            } catch (InterruptedException ie)
-            {
-
+            long startTime = System.currentTimeMillis();
+            for (int count = 0; ;count++) {
+                long now = System.currentTimeMillis();
+                if(now - startTime >= 10000) break;
             }
-
+            if(player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ ) {
+                player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
+                return;
+            }
         }
     }
 }
