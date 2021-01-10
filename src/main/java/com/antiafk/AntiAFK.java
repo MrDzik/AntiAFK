@@ -29,7 +29,7 @@ public final class AntiAFK extends JavaPlugin {
     public static void AFK(Player player) {
         double oldX = player.getLocation().getX();
         double oldZ = player.getLocation().getZ();
-        server.getConsoleSender().sendMessage(ChatColor.AQUA + "X: " + oldX + "Z: " + oldZ);
+        server.getConsoleSender().sendMessage(ChatColor.AQUA + "x: " + oldX + "z: " + oldZ);
     }
 }
 class Join implements Listener {
