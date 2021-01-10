@@ -47,13 +47,6 @@ public final class AntiAFK extends JavaPlugin {
         }
     }
 }
-class Join implements Listener {
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent ev) {
-        ev.setJoinMessage("Witamy na serwerze!");
-        Player player = ev.getPlayer();
-        AntiAFK.AFK(player);
-    }
-}
+
 
 
