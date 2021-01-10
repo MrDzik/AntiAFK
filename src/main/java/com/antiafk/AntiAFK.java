@@ -14,7 +14,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.concurrent.TimeUnit;
 
-public final class AntiAFK extends JavaPlugin {
+public class AntiAFK extends JavaPlugin {
     private static Server server;
     @Override
     public void onEnable() {
@@ -29,6 +29,7 @@ public final class AntiAFK extends JavaPlugin {
         getServer().getConsoleSender().sendMessage(ChatColor.RED + "[AntiAFK] Plugin is disabled");
     }
     public static void AFK(Player player) {
+        server.getConsoleSender().sendMessage("jestem tutaj");
         double oldX = player.getLocation().getX();
         double oldZ = player.getLocation().getZ();
         server.getConsoleSender().sendMessage(ChatColor.AQUA + "x: " + oldX + "z: " + oldZ);

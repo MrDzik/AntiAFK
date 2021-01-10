@@ -1,6 +1,6 @@
 name: AntiAFK
 version: ${project.version}
-main: com.mrdzik.antiafk.AntiAFK
+main: com.antiafk.AntiAFK
 prefix: $
 load: STARTUP
 description: AntiAFK plugin for 1.12.2 PaperMC
