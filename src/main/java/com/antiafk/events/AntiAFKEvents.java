@@ -15,11 +15,12 @@ public class AntiAFKEvents implements Listener {
         while (true) {
             double oldX = player.getLocation().getX();
             double oldZ = player.getLocation().getZ();
-                try {
-                    TimeUnit.SECONDS.sleep(5);
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException ie)
+            {
+
+            }
             if(player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ ) {
                 player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
             }
