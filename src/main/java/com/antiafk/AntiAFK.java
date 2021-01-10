@@ -12,6 +12,8 @@ import org.bukkit.event.player.PlayerEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.concurrent.TimeUnit;
+
 public final class AntiAFK extends JavaPlugin {
     private static Server server;
     @Override
@@ -30,6 +32,19 @@ public final class AntiAFK extends JavaPlugin {
         double oldX = player.getLocation().getX();
         double oldZ = player.getLocation().getZ();
         server.getConsoleSender().sendMessage(ChatColor.AQUA + "x: " + oldX + "z: " + oldZ);
+
+        for(int i=0; i<5;i++){
+            try {
+                TimeUnit.SECONDS.sleep(1);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+        double newX = player.getLocation().getX();
+        double newZ = player.getLocation().getZ();
+        if(newX == oldX && newZ == newX ){
+            player.kickPlayer("Kick");
+        }
     }
 }
 class Join implements Listener {
