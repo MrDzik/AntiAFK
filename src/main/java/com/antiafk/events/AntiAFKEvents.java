@@ -14,9 +14,9 @@ class PrimeThread extends Thread {
     public void run() {
         while (player.isOnline()) {
             try {
+                PrimeThread.sleep(20000);
                 double oldX = player.getLocation().getX();
                 double oldZ = player.getLocation().getZ();
-                PrimeThread.sleep(10000);
                 if(player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ ) {
                     player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
                 }
@@ -32,6 +32,6 @@ public class AntiAFKEvents implements Listener {
     public static void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         PrimeThread thread = new PrimeThread(player);
-        thread.run();
+        thread.start();
     }
 }
