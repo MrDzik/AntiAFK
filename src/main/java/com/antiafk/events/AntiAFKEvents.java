@@ -15,21 +15,7 @@ public class AntiAFKEvents implements Listener {
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-        BukkitTask task = new BukkitRunnable() {
-            double oldX;
-            double oldZ;
-            public void run() {
-                if (player.isOnline()) {
-                    if (player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ) {
-                        player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
-                    } else {
-                        oldX = player.getLocation().getX();
-                        oldZ = player.getLocation().getZ();
-                    }
-                } else {
-                    this.cancel();
-                }
-            }
-        }.runTaskTimer(AntiAFK.getMainPlugin(), 30 * 20, 30 * 20);
+        BukkitTask task = new AFKKickerRunnable(player)
+                .runTaskTimer(AntiAFK.getMainPlugin(), 30 * 20, 30 * 20);
     }
 }
