@@ -23,6 +23,5 @@ public class AntiAFK extends JavaPlugin{
         getServer().getConsoleSender().sendMessage(ChatColor.RED + "[AntiAFK] Plugin is disabled");
     }
 }
-
-
+// testing github webhook
 
