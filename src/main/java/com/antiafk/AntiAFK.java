@@ -8,7 +8,7 @@ public class AntiAFK extends JavaPlugin{
     public void onEnable() {
         // Plugin startup logic
         getServer().getPluginManager().registerEvents(new AntiAFKEvents(), this);
-        getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[AntiAFK] Plugin is enabled");
+        getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[AntiAFK] Plugin is enaaabled");
     }
     @Override
     public void onDisable() {
