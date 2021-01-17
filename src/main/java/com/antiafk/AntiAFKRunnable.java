@@ -1,15 +1,15 @@
-package com.antiafk.events;
+package com.antiafk;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class AFKKickerRunnable extends BukkitRunnable {
+public class AntiAFKRunnable extends BukkitRunnable {
     private Player player;
     private double oldX;
     private double oldZ;
 
-    private boolean isNotPlayerPositionChanged(){
+    private boolean isPlayerPositionNotChanged(){
         return player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ;
     }
     private void updatePlayerPosition(){
@@ -17,16 +17,19 @@ public class AFKKickerRunnable extends BukkitRunnable {
         oldZ = player.getLocation().getZ();
     }
     public void run() {
-        if (player.isOnline())
-            if (isNotPlayerPositionChanged())
+        if (player.isOnline()) {
+            if (isPlayerPositionNotChanged()) {
                 player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
-            else
+            }else {
                 updatePlayerPosition();
-        else
+            }
+        }
+        else {
             this.cancel();
+        }
     }
 
-    public AFKKickerRunnable(Player player){
+    public AntiAFKRunnable(Player player){
         this.player = player;
     }
 }
