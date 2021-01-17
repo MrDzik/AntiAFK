@@ -20,11 +20,10 @@ public class AntiAFKRunnable extends BukkitRunnable {
         if (player.isOnline()) {
             if (isPlayerPositionNotChanged()) {
                 player.kickPlayer(ChatColor.RED + "Zostałeś wyrzucony za bycie AFK");
-            }else {
+            } else {
                 updatePlayerPosition();
             }
-        }
-        else {
+        } else {
             this.cancel();
         }
     }
