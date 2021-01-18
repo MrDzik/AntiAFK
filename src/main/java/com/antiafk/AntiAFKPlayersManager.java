@@ -1,6 +1,8 @@
 package com.antiafk;
 
+import com.antiafk.runnables.AntiAFKThread;
 import org.bukkit.entity.Player;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,10 +10,13 @@ import java.util.List;
 public class AntiAFKPlayersManager {
     public List<Player> thread1 = new ArrayList<>();
     public List<Player> thread2 = new ArrayList<>();
-    private List<Player> notAssignedPlayers = new ArrayList<>();
 
     public void addPlayer(Player player) {
-        notAssignedPlayers.add(player);
+        if (thread1.size() <= thread2.size()) {
+            thread1.add(player);
+        } else {
+            thread2.add(player);
+        }
     }
 
     public void deletePlayer(Player player) {
@@ -23,18 +28,7 @@ public class AntiAFKPlayersManager {
     }
 
     public void run() {
-
-    }
-
-    private void addPlayersToThread(List<Player> notAssignedPlayers) {
-        if (!notAssignedPlayers.isEmpty()) {
-            for (Player player : notAssignedPlayers) {
-                if (thread1.size() <= thread2.size()) {
-                    thread1.add(player);
-                } else {
-                    thread2.add(player);
-                }
-            }
-        }
+        BukkitTask fthread = new AntiAFKThread(thread1).runTaskTimer(AntiAFK.getMainPlugin(), 30 * 20, 30 * 20);
+        BukkitTask sthread = new AntiAFKThread(thread2).runTaskTimer(AntiAFK.getMainPlugin(), 30 * 20, 30 * 20);
     }
 }

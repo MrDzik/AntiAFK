@@ -2,6 +2,7 @@ package com.antiafk.runnables;
 
 import com.antiafk.AntiAFK;
 import com.antiafk.AntiAFKPlayersManager;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -32,7 +33,13 @@ public class AntiAFKThread extends BukkitRunnable {
                         oldX.add(player.getLocation().getZ());
                     } else {
                         if (isPlayerPositionNotChanged(player, oldX.get(playerIndex), oldZ.get(playerIndex))) {
-
+                            player.kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
+                            playersManager.deletePlayer(player);
+                            oldX.set(playerList.indexOf(player), null);
+                            oldZ.set(playerList.indexOf(player), null);
+                        } else {
+                            oldX.set(playerIndex, player.getLocation().getX());
+                            oldZ.set(playerIndex, player.getLocation().getX());
                         }
                     }
                 } else {
