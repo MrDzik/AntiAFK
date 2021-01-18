@@ -1,4 +1,4 @@
-package com.antiafk;
+package com.antiafk.runnables;
 
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;

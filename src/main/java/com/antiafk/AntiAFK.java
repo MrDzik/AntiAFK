@@ -1,15 +1,20 @@
 package com.antiafk;
 import com.antiafk.events.AntiAFKEvents;
 import org.bukkit.ChatColor;
-import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
-import org.bukkit.scheduler.BukkitTask;
 
-public class AntiAFK extends JavaPlugin{
+public class AntiAFK extends JavaPlugin {
     static JavaPlugin plugin;
+    static AntiAFKPlayersManager PlayersManager = new AntiAFKPlayersManager();
+
+    public static AntiAFKPlayersManager getPlayersManager() {
+        return PlayersManager;
+    }
+
     public static JavaPlugin getMainPlugin() {
         return plugin;
     }
+
     @Override
     public void onEnable() {
         // Plugin startup logic
@@ -23,5 +28,4 @@ public class AntiAFK extends JavaPlugin{
         getServer().getConsoleSender().sendMessage(ChatColor.RED + "[AntiAFK] Plugin is disabled");
     }
 }
-// testing github webhook
 
