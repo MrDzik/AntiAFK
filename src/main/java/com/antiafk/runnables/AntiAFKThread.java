@@ -19,8 +19,16 @@ public class AntiAFKThread extends BukkitRunnable {
         this.number = number;
     }
 
-    private boolean isPlayerPositionNotChanged(Player player, PlayerPosition playerPosition) {
-        return player.getLocation().getX() == playerPosition.getX() && player.getLocation().getZ() == playerPosition.getZ();
+    private boolean isPlayerPositionNotChanged(PlayerPosition playerPosition) {
+        Player player = playerPosition.getPlayer();
+        return player.getLocation().getX() == playerPosition.getX() &&
+                player.getLocation().getZ() == playerPosition.getZ();
+    }
+
+    private void updatePlayerPosition(PlayerPosition playerPosition){
+        Player player = playerPosition.getPlayer();
+        playerPosition.setX(player.getLocation().getX());
+        playerPosition.setZ(player.getLocation().getZ());
     }
 
     public void run() {
@@ -32,18 +40,16 @@ public class AntiAFKThread extends BukkitRunnable {
         if (!playerList.isEmpty()) {
             AntiAFK.getMainPlugin().getServer().getConsoleSender().sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
             for (PlayerPosition playerPosition : playerList) {
-                Player player = playerPosition.getPlayer();
                 if (playerPosition.getPlayer().isOnline()) {
                     if (playerPosition.getX() == 0) {
-                        playerPosition.setX(player.getLocation().getX());
-                        playerPosition.setZ(player.getLocation().getZ());
+                        updatePlayerPosition(playerPosition);
                     } else {
-                        if (isPlayerPositionNotChanged(player, playerPosition)) {
-                            player.kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
+                        if (isPlayerPositionNotChanged(playerPosition)) {
+                            playerPosition.getPlayer()
+                                    .kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
                             playersManager.deletePlayer(playerPosition);
                         } else {
-                            playerPosition.setX(player.getLocation().getX());
-                            playerPosition.setZ(player.getLocation().getZ());
+                            updatePlayerPosition(playerPosition);
                         }
                     }
                 } else {
@@ -51,6 +57,5 @@ public class AntiAFKThread extends BukkitRunnable {
                 }
             }
         }
-
     }
 }
