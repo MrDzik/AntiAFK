@@ -1,7 +1,7 @@
 package com.antiafk.events;
 
 import com.antiafk.AntiAFK;
-import com.antiafk.AntiAFKPlayersManager;
+import com.antiafk.managers.AntiAFKPlayersManager;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;

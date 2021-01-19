@@ -1,11 +1,11 @@
-package com.antiafk.runnables;
+package com.antiafk.objects;
 
 import org.bukkit.entity.Player;
 
 public class PlayerPosition {
-    private double x;
-    private double y;
     private Player player;
+    private double x;
+    private double z;
 
     public void setX(double x) {
         this.x = x;
@@ -15,12 +15,12 @@ public class PlayerPosition {
         return x;
     }
 
-    public void setY(double y) {
-        this.y = y;
+    public PlayerPosition(Player player) {
+        this.player = player;
     }
 
-    public double getY() {
-        return y;
+    public double getZ() {
+        return z;
     }
 
     public void setPlayer(Player player) {
@@ -31,9 +31,7 @@ public class PlayerPosition {
         return player;
     }
 
-    public PlayerPosition(double x, double y, Player player){
-        this.player = player;
-        this.x = x;
-        this.y = y;
+    public void setZ(double z) {
+        this.z = z;
     }
 }

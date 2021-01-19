@@ -1,7 +1,8 @@
 package com.antiafk.runnables;
 
 import com.antiafk.AntiAFK;
-import com.antiafk.AntiAFKPlayersManager;
+import com.antiafk.managers.AntiAFKPlayersManager;
+import com.antiafk.objects.PlayerPosition;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -11,43 +12,43 @@ import java.util.List;
 
 public class AntiAFKThread extends BukkitRunnable {
     AntiAFKPlayersManager playersManager = AntiAFK.getPlayersManager();
-    private List<Player> playerList;
-    private List<Double> oldX = new ArrayList<>();
-    private List<Double> oldZ = new ArrayList<>();
+    private List<PlayerPosition> playerList;
+    private int number;
 
-    public AntiAFKThread(List<Player> playerList) {
-        this.playerList = playerList;
+    public AntiAFKThread(int number) {
+        this.number = number;
     }
 
-    private boolean isPlayerPositionNotChanged(Player player, Double oldX, Double oldZ) {
-        return player.getLocation().getX() == oldX && player.getLocation().getZ() == oldZ;
+    private boolean isPlayerPositionNotChanged(Player player, PlayerPosition playerPosition) {
+        return player.getLocation().getX() == playerPosition.getX() && player.getLocation().getZ() == playerPosition.getZ();
     }
 
     public void run() {
+        if (number == 1) {
+            playerList = new ArrayList<>(playersManager.thread1);
+        } else {
+            playerList = new ArrayList<>(playersManager.thread2);
+        }
         if (!playerList.isEmpty()) {
-            for (Player player : playerList) {
-                int playerIndex = playerList.indexOf(player);
-                if (player.isOnline()) {
-                    if (oldX.size() < playerList.indexOf(player)) {
-                        oldX.add(player.getLocation().getX());
-                        oldX.add(player.getLocation().getZ());
+            AntiAFK.getMainPlugin().getServer().getConsoleSender().sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
+            for (PlayerPosition playerPosition : playerList) {
+                /* Iterator<PlayerPosition> it = playerList.iterator(); it.hasNext(); PlayerPosition playerPosition = it.next(); */
+                Player player = playerPosition.getPlayer();
+                if (playerPosition.getPlayer().isOnline()) {
+                    if (playerPosition.getX() == 0) {
+                        playerPosition.setX(player.getLocation().getX());
+                        playerPosition.setZ(player.getLocation().getZ());
                     } else {
-                        if (isPlayerPositionNotChanged(player, oldX.get(playerIndex), oldZ.get(playerIndex))) {
+                        if (isPlayerPositionNotChanged(player, playerPosition)) {
                             player.kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
-                            playersManager.deletePlayer(player);
-                            oldX.set(playerList.indexOf(player), null);
-                            oldZ.set(playerList.indexOf(player), null);
+                            playersManager.deletePlayer(playerPosition);
                         } else {
-                            oldX.set(playerIndex, player.getLocation().getX());
-                            oldZ.set(playerIndex, player.getLocation().getX());
+                            playerPosition.setX(player.getLocation().getX());
+                            playerPosition.setZ(player.getLocation().getZ());
                         }
                     }
                 } else {
-                    if (oldX.size() >= playerList.indexOf(player)) {
-                        oldX.set(playerList.indexOf(player), null);
-                        oldZ.set(playerList.indexOf(player), null);
-                    }
-                    playersManager.deletePlayer(player);
+                    playersManager.deletePlayer(playerPosition);
                 }
             }
         }
