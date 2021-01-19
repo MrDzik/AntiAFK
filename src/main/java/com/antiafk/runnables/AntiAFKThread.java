@@ -38,7 +38,8 @@ public class AntiAFKThread extends BukkitRunnable {
             playerList = new ArrayList<>(playersManager.PlayerList2);
         }
         if (!playerList.isEmpty()) {
-            AntiAFK.getMainPlugin().getServer().getConsoleSender().sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
+            AntiAFK.getMainPlugin().getServer().getConsoleSender()
+                    .sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
             for (PlayerPosition playerPosition : playerList) {
                 if (playerPosition.getPlayer().isOnline()) {
                     if (playerPosition.getX() == 0) {
