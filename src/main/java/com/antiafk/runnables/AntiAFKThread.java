@@ -2,7 +2,7 @@ package com.antiafk.runnables;
 
 import com.antiafk.AntiAFK;
 import com.antiafk.managers.AntiAFKPlayersManager;
-import com.antiafk.objects.PlayerPosition;
+import com.antiafk.objects.PlayerData;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -12,42 +12,42 @@ import java.util.List;
 
 public class AntiAFKThread extends BukkitRunnable {
     AntiAFKPlayersManager playersManager = AntiAFK.getPlayersManager();
-    private List<PlayerPosition> playerList;
+    private List<PlayerData> playerDataList;
     private int number;
 
     public AntiAFKThread(int number) {
         this.number = number;
     }
 
-    private boolean isPlayerPositionNotChanged(PlayerPosition playerPosition) {
-        Player player = playerPosition.getPlayer();
-        return player.getLocation().getX() == playerPosition.getX() &&
-                player.getLocation().getZ() == playerPosition.getZ();
+    private boolean isPlayerPositionNotChanged(PlayerData playerData) {
+        Player player = playerData.getPlayer();
+        return player.getLocation().getX() == playerData.getX() &&
+                player.getLocation().getZ() == playerData.getZ();
     }
 
-    private void updatePlayerPosition(PlayerPosition playerPosition){
-        Player player = playerPosition.getPlayer();
-        playerPosition.setX(player.getLocation().getX());
-        playerPosition.setZ(player.getLocation().getZ());
+    private void updatePlayerPosition(PlayerData playerData){
+        Player player = playerData.getPlayer();
+        playerData.setX(player.getLocation().getX());
+        playerData.setZ(player.getLocation().getZ());
     }
 
     private void setPlayerList(){
         if (number == 1)
-            playerList = new ArrayList<>(playersManager.PlayerList1);
+            playerDataList = new ArrayList<>(playersManager.PlayerList1);
         else
-            playerList = new ArrayList<>(playersManager.PlayerList2);
+            playerDataList = new ArrayList<>(playersManager.PlayerList2);
     }
 
-    private void takeCareOfPlayer(PlayerPosition playerPosition){
-        if (playerPosition.getX() == 0) {
-            updatePlayerPosition(playerPosition);
+    private void takeCareOfPlayer(PlayerData playerData){
+        if (playerData.getX() == 0) {
+            updatePlayerPosition(playerData);
         } else {
-            if (isPlayerPositionNotChanged(playerPosition)) {
-                playerPosition.getPlayer()
+            if (isPlayerPositionNotChanged(playerData)) {
+                playerData.getPlayer()
                         .kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
-                playersManager.deletePlayer(playerPosition);
+                playersManager.deletePlayer(playerData);
             } else {
-                updatePlayerPosition(playerPosition);
+                updatePlayerPosition(playerData);
             }
         }
 
@@ -55,14 +55,14 @@ public class AntiAFKThread extends BukkitRunnable {
 
     public void run() {
         setPlayerList();
-        if (!playerList.isEmpty()) {
+        if (!playerDataList.isEmpty()) {
             AntiAFK.getMainPlugin().getServer().getConsoleSender()
-                    .sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
-            for (PlayerPosition playerPosition : playerList) {
-                if (playerPosition.getPlayer().isOnline()) {
-                    takeCareOfPlayer(playerPosition);
+                    .sendMessage("Thread" + number + " is running and have: " + playerDataList.size() + " players");
+            for (PlayerData playerData : playerDataList) {
+                if (playerData.getPlayer().isOnline()) {
+                    takeCareOfPlayer(playerData);
                 } else {
-                    playersManager.deletePlayer(playerPosition);
+                    playersManager.deletePlayer(playerData);
                 }
             }
         }
