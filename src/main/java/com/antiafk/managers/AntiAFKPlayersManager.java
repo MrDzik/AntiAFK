@@ -31,7 +31,7 @@ public class AntiAFKPlayersManager {
     }
 
     public void run() {
-        BukkitTask fthread = new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, 180 * 20);
-        BukkitTask sthread = new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, 180 * 20);
+        new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, 180 * 20);
+        new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, 180 * 20);
     }
 }
