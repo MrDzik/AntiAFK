@@ -10,23 +10,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AntiAFKPlayersManager {
-    public List<PlayerPosition> thread1 = new ArrayList<>();
-    public List<PlayerPosition> thread2 = new ArrayList<>();
+    public List<PlayerPosition> PlayerList1 = new ArrayList<>();
+    public List<PlayerPosition> PlayerList2 = new ArrayList<>();
 
     public void addPlayer(Player player) {
         PlayerPosition playerPosition = new PlayerPosition(player);
-        if (thread1.size() <= thread2.size()) {
-            thread1.add(playerPosition);
+        if (PlayerList1.size() <= PlayerList2.size()) {
+            PlayerList1.add(playerPosition);
         } else {
-            thread2.add(playerPosition);
+            PlayerList2.add(playerPosition);
         }
     }
 
     public void deletePlayer(PlayerPosition player) {
-        if (thread1.contains(player)) {
-            thread1.remove(player);
+        if (PlayerList1.contains(player)) {
+            PlayerList1.remove(player);
         } else {
-            thread2.remove(player);
+            PlayerList2.remove(player);
         }
     }
 

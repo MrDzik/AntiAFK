@@ -25,9 +25,9 @@ public class AntiAFKThread extends BukkitRunnable {
 
     public void run() {
         if (number == 1) {
-            playerList = new ArrayList<>(playersManager.thread1);
+            playerList = new ArrayList<>(playersManager.PlayerList1);
         } else {
-            playerList = new ArrayList<>(playersManager.thread2);
+            playerList = new ArrayList<>(playersManager.PlayerList2);
         }
         if (!playerList.isEmpty()) {
             AntiAFK.getMainPlugin().getServer().getConsoleSender().sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
