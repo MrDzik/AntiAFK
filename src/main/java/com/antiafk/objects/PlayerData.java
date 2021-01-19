@@ -2,25 +2,24 @@ package com.antiafk.objects;
 
 import org.bukkit.entity.Player;
 
-public class PlayerPosition {
+public class PlayerData {
     private Player player;
-    private double x;
-    private double z;
+    private Position position;
 
     public void setX(double x) {
-        this.x = x;
+        position.setX(x);
     }
 
     public double getX() {
-        return x;
+        return position.getX();
     }
 
-    public PlayerPosition(Player player) {
+    public PlayerData(Player player) {
         this.player = player;
     }
 
     public double getZ() {
-        return z;
+        return position.getZ();
     }
 
     public void setPlayer(Player player) {
@@ -32,6 +31,6 @@ public class PlayerPosition {
     }
 
     public void setZ(double z) {
-        this.z = z;
+        position.setZ(z);
     }
 }

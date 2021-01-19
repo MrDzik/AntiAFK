@@ -2,7 +2,7 @@ package com.antiafk.managers;
 
 import com.antiafk.AntiAFK;
 import com.antiafk.runnables.AntiAFKThread;
-import com.antiafk.objects.PlayerPosition;
+import com.antiafk.objects.PlayerData;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitTask;
 
@@ -10,19 +10,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AntiAFKPlayersManager {
-    public List<PlayerPosition> PlayerList1 = new ArrayList<>();
-    public List<PlayerPosition> PlayerList2 = new ArrayList<>();
+    public List<PlayerData> PlayerList1 = new ArrayList<>();
+    public List<PlayerData> PlayerList2 = new ArrayList<>();
 
     public void addPlayer(Player player) {
-        PlayerPosition playerPosition = new PlayerPosition(player);
+        PlayerData playerData = new PlayerData(player);
         if (PlayerList1.size() <= PlayerList2.size()) {
-            PlayerList1.add(playerPosition);
+            PlayerList1.add(playerData);
         } else {
-            PlayerList2.add(playerPosition);
+            PlayerList2.add(playerData);
         }
     }
 
-    public void deletePlayer(PlayerPosition player) {
+    public void deletePlayer(PlayerData player) {
         if (PlayerList1.contains(player)) {
             PlayerList1.remove(player);
         } else {
