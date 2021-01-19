@@ -31,28 +31,36 @@ public class AntiAFKThread extends BukkitRunnable {
         playerPosition.setZ(player.getLocation().getZ());
     }
 
-    public void run() {
-        if (number == 1) {
+    private void setPlayerList(){
+        if (number == 1)
             playerList = new ArrayList<>(playersManager.PlayerList1);
-        } else {
+        else
             playerList = new ArrayList<>(playersManager.PlayerList2);
+    }
+
+    private void takeCareOfPlayer(PlayerPosition playerPosition){
+        if (playerPosition.getX() == 0) {
+            updatePlayerPosition(playerPosition);
+        } else {
+            if (isPlayerPositionNotChanged(playerPosition)) {
+                playerPosition.getPlayer()
+                        .kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
+                playersManager.deletePlayer(playerPosition);
+            } else {
+                updatePlayerPosition(playerPosition);
+            }
         }
+
+    }
+
+    public void run() {
+        setPlayerList();
         if (!playerList.isEmpty()) {
             AntiAFK.getMainPlugin().getServer().getConsoleSender()
                     .sendMessage("Thread" + number + " is running and have: " + playerList.size() + " players");
             for (PlayerPosition playerPosition : playerList) {
                 if (playerPosition.getPlayer().isOnline()) {
-                    if (playerPosition.getX() == 0) {
-                        updatePlayerPosition(playerPosition);
-                    } else {
-                        if (isPlayerPositionNotChanged(playerPosition)) {
-                            playerPosition.getPlayer()
-                                    .kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
-                            playersManager.deletePlayer(playerPosition);
-                        } else {
-                            updatePlayerPosition(playerPosition);
-                        }
-                    }
+                    takeCareOfPlayer(playerPosition);
                 } else {
                     playersManager.deletePlayer(playerPosition);
                 }
