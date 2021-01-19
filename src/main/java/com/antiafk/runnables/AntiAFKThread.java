@@ -18,26 +18,22 @@ public class AntiAFKThread extends BukkitRunnable {
     public AntiAFKThread(int number) {
         this.number = number;
     }
-
     private boolean isPlayerPositionNotChanged(PlayerData playerData) {
         Player player = playerData.getPlayer();
         return player.getLocation().getX() == playerData.getX() &&
                 player.getLocation().getZ() == playerData.getZ();
     }
-
     private void updatePlayerPosition(PlayerData playerData){
         Player player = playerData.getPlayer();
         playerData.setX(player.getLocation().getX());
         playerData.setZ(player.getLocation().getZ());
     }
-
     private void setPlayerList(){
         if (number == 1)
             playerDataList = new ArrayList<>(playersManager.PlayerList1);
         else
             playerDataList = new ArrayList<>(playersManager.PlayerList2);
     }
-
     private void takeCareOfPlayer(PlayerData playerData){
         if (playerData.getX() == 0) {
             updatePlayerPosition(playerData);

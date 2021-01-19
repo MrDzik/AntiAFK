@@ -21,7 +21,6 @@ public class AntiAFKPlayersManager {
             PlayerList2.add(playerData);
         }
     }
-
     public void deletePlayer(PlayerData player) {
         if (PlayerList1.contains(player)) {
             PlayerList1.remove(player);
