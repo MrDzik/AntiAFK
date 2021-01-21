@@ -3,32 +3,21 @@ package com.antiafk.objects;
 import org.bukkit.entity.Player;
 
 public class PlayerData {
-    private Player player;
-    private double x;
-    private double z;
-
-    public void setZ(double z) {
-        this.z = z;
-    }
-    public double getZ() {
-        return z;
-    }
-    public void setX(double x) {
-        this.x = x;
-    }
-    public double getX() {
-        return x;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-    public Player getPlayer() {
-        return player;
-    }
+    public Player player;
+    public double x;
+    public double z;
+    public double y;
 
     public PlayerData(Player player) {
         this.player = player;
         this.x = 0;
+        this.y = 0;
         this.z = 0;
+    }
+    public PlayerData(Player player, int x, int y, int z) {
+        this.player = player;
+        this.x = x;
+        this.y = y;
+        this.z = z;
     }
 }
