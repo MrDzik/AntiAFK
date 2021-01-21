@@ -2,18 +2,21 @@ package com.antiafk.runnables;
 
 import com.antiafk.AntiAFK;
 import com.antiafk.managers.AntiAFKPlayersManager;
-import com.antiafk.objects.PlayerData;
 import org.bukkit.ChatColor;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
+
+import com.antiafk.objects.PlayerData;
+
 import java.util.List;
 
 public class AntiAFKThread extends BukkitRunnable {
     AntiAFKPlayersManager playersManager = AntiAFK.getPlayersManager();
     private List<PlayerData> playerDataList;
-    private int number;
+    private final int number;
 
     public AntiAFKThread(int number) {
         this.number = number;
@@ -39,21 +42,21 @@ public class AntiAFKThread extends BukkitRunnable {
             updatePlayerPosition(playerData);
         } else {
             if (isPlayerPositionNotChanged(playerData)) {
-                playerData.getPlayer()
-                        .kickPlayer(ChatColor.GREEN + "Zostałeś wyrzucony za bycie AFK");
-                playersManager.deletePlayer(playerData);
+                boolean isKickable = false;
+                for (int i = 0; i < 16; i += 3) {
+                    if (i == 15)
+                        isKickable = true;
+                    new Reminder(playerData, isKickable).runTaskLater(AntiAFK.getMainPlugin(), i * 20L);
+                }
             } else {
                 updatePlayerPosition(playerData);
             }
         }
 
     }
-
     public void run() {
         setPlayerList();
         if (!playerDataList.isEmpty()) {
-            AntiAFK.getMainPlugin().getServer().getConsoleSender()
-                    .sendMessage("Thread" + number + " is running and have: " + playerDataList.size() + " players");
             for (PlayerData playerData : playerDataList) {
                 if (playerData.getPlayer().isOnline()) {
                     takeCareOfPlayer(playerData);
@@ -62,5 +65,35 @@ public class AntiAFKThread extends BukkitRunnable {
                 }
             }
         }
+    }
+}
+
+class Reminder extends BukkitRunnable {
+    private final PlayerData playerData;
+    private final boolean isKickable;
+    AntiAFKPlayersManager playersManager = AntiAFK.getPlayersManager();
+
+    public Reminder(PlayerData playerData, boolean isKickable) {
+        this.playerData = playerData;
+        this.isKickable = isKickable;
+    }
+
+    private boolean isPlayerPositionNotChanged(PlayerData playerData) {
+        Player player = playerData.getPlayer();
+        return player.getLocation().getX() == playerData.getX() &&
+                player.getLocation().getZ() == playerData.getZ();
+    }
+
+    public void run() {
+        if (isPlayerPositionNotChanged(playerData)) {
+            if (!isKickable) {
+                playerData.getPlayer().playSound(playerData.getPlayer().getLocation(), Sound.ENTITY_ENDERDRAGON_AMBIENT, 1, 1);
+                playerData.getPlayer().sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a");
+            } else {
+                playerData.getPlayer().kickPlayer(ChatColor.GREEN + "Zostales wyrzucony/a za bycie AFK");
+                playersManager.deletePlayer(playerData);
+            }
+        }
+        this.cancel();
     }
 }
