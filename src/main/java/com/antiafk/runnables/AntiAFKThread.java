@@ -3,14 +3,12 @@ package com.antiafk.runnables;
 import com.antiafk.AntiAFK;
 import com.antiafk.managers.AntiAFKPlayersManager;
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
-
 import java.util.ArrayList;
-
 import com.antiafk.objects.PlayerData;
-
 import java.util.List;
 
 public class AntiAFKThread extends BukkitRunnable {
@@ -21,15 +19,13 @@ public class AntiAFKThread extends BukkitRunnable {
     public AntiAFKThread(int number) {
         this.number = number;
     }
-    private boolean isPlayerPositionNotChanged(PlayerData playerData) {
-        Player player = playerData.player;
-        return player.getLocation().getX() == playerData.x &&
-                player.getLocation().getZ() == playerData.z;
+    private boolean isPlayerPositionNotChanged(PlayerData playerData, Location loc) {
+        return loc.getX() == playerData.x &&
+                loc.getZ() == playerData.z;
     }
-    private void updatePlayerPosition(PlayerData playerData){
-        Player player = playerData.player;
-        playerData.x = player.getLocation().getX();
-        playerData.z = player.getLocation().getZ();
+    private void updatePlayerPosition(PlayerData playerData, Location loc){
+        playerData.x = loc.getX();
+        playerData.z = loc.getZ();
     }
     private void setPlayerList(){
         if (number == 1)
@@ -37,29 +33,26 @@ public class AntiAFKThread extends BukkitRunnable {
         else
             playerDataList = new ArrayList<>(playersManager.PlayerList2);
     }
-    private void takeCareOfPlayer(PlayerData playerData){
-        if (playerData.x == 0) {
-            updatePlayerPosition(playerData);
-        } else {
-            if (isPlayerPositionNotChanged(playerData)) {
-                boolean isKickable = false;
-                for (int i = 0; i < 16; i += 3) {
-                    if (i == 15)
-                        isKickable = true;
-                    new Reminder(playerData, isKickable).runTaskLater(AntiAFK.getMainPlugin(), i * 20L);
-                }
-            } else {
-                updatePlayerPosition(playerData);
-            }
-        }
-
-    }
     public void run() {
         setPlayerList();
         if (!playerDataList.isEmpty()) {
             for (PlayerData playerData : playerDataList) {
                 if (playerData.player.isOnline()) {
-                    takeCareOfPlayer(playerData);
+                    Location loc = playerData.player.getLocation();
+                    if (playerData.x == 0) {
+                        updatePlayerPosition(playerData, loc);
+                    } else {
+                        if (isPlayerPositionNotChanged(playerData, loc)) {
+                            boolean isKickable = false;
+                            for (int i = 0; i < 16; i += 3) {
+                                if (i == 15)
+                                    isKickable = true;
+                                new Reminder(playerData, isKickable).runTaskLater(AntiAFK.getMainPlugin(), i * 20L);
+                            }
+                        } else {
+                            updatePlayerPosition(playerData, loc);
+                        }
+                    }
                 } else {
                     playersManager.deletePlayer(playerData);
                 }
@@ -94,6 +87,5 @@ class Reminder extends BukkitRunnable {
                 playersManager.deletePlayer(playerData);
             }
         }
-        this.cancel();
     }
 }
