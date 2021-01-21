@@ -4,7 +4,7 @@ import org.bukkit.entity.Player;
 
 public class PlayerData {
     private Player player;
-    private Position position;
+    private Position position = new Position(0, 0, 0);
 
     public void setX(double x) {
         position.setX(x);
