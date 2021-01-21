@@ -61,31 +61,3 @@ public class AntiAFKThread extends BukkitRunnable {
     }
 }
 
-class Reminder extends BukkitRunnable {
-    private final PlayerData playerData;
-    private final boolean isKickable;
-    private final AntiAFKPlayersManager playersManager = AntiAFK.getPlayersManager();
-
-    public Reminder(PlayerData playerData, boolean isKickable) {
-        this.playerData = playerData;
-        this.isKickable = isKickable;
-    }
-
-    private boolean isPlayerPositionNotChanged(PlayerData playerData, Location loc) {
-        return loc.getX() == playerData.x &&
-                loc.getZ() == playerData.z;
-    }
-
-    public void run() {
-        Location loc = playerData.player.getLocation();
-        if (isPlayerPositionNotChanged(playerData, loc)) {
-            if (!isKickable) {
-                playerData.player.playSound(loc, Sound.ENTITY_ENDERDRAGON_AMBIENT, 1, 1);
-                playerData.player.sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a");
-            } else {
-                playerData.player.kickPlayer(ChatColor.GREEN + "Zostales wyrzucony/a za bycie AFK");
-                playersManager.deletePlayer(playerData);
-            }
-        }
-    }
-}
