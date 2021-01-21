@@ -14,7 +14,7 @@ public class PlayerData {
         this.y = 0;
         this.z = 0;
     }
-    public PlayerData(Player player, int x, int y, int z) {
+    public PlayerData(Player player, double x, double y, double z) {
         this.player = player;
         this.x = x;
         this.y = y;
