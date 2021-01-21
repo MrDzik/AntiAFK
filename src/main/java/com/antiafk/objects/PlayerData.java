@@ -4,19 +4,20 @@ import org.bukkit.entity.Player;
 
 public class PlayerData {
     private Player player;
-    private Position position = new Position(0, 0, 0);
+    private double x;
+    private double z;
 
-    public void setX(double x) {
-        position.setX(x);
-    }
-    public double getX() {
-        return position.getX();
-    }
-    public PlayerData(Player player) {
-        this.player = player;
+    public void setZ(double z) {
+        this.z = z;
     }
     public double getZ() {
-        return position.getZ();
+        return z;
+    }
+    public void setX(double x) {
+        this.x = x;
+    }
+    public double getX() {
+        return x;
     }
     public void setPlayer(Player player) {
         this.player = player;
@@ -24,7 +25,10 @@ public class PlayerData {
     public Player getPlayer() {
         return player;
     }
-    public void setZ(double z) {
-        position.setZ(z);
+
+    public PlayerData(Player player) {
+        this.player = player;
+        this.x = 0;
+        this.z = 0;
     }
 }
