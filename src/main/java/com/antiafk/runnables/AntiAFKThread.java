@@ -22,14 +22,14 @@ public class AntiAFKThread extends BukkitRunnable {
         this.number = number;
     }
     private boolean isPlayerPositionNotChanged(PlayerData playerData) {
-        Player player = playerData.getPlayer();
-        return player.getLocation().getX() == playerData.getX() &&
-                player.getLocation().getZ() == playerData.getZ();
+        Player player = playerData.player;
+        return player.getLocation().getX() == playerData.x &&
+                player.getLocation().getZ() == playerData.z;
     }
     private void updatePlayerPosition(PlayerData playerData){
-        Player player = playerData.getPlayer();
-        playerData.setX(player.getLocation().getX());
-        playerData.setZ(player.getLocation().getZ());
+        Player player = playerData.player;
+        playerData.x = player.getLocation().getX();
+        playerData.z = player.getLocation().getZ();
     }
     private void setPlayerList(){
         if (number == 1)
@@ -38,7 +38,7 @@ public class AntiAFKThread extends BukkitRunnable {
             playerDataList = new ArrayList<>(playersManager.PlayerList2);
     }
     private void takeCareOfPlayer(PlayerData playerData){
-        if (playerData.getX() == 0) {
+        if (playerData.x == 0) {
             updatePlayerPosition(playerData);
         } else {
             if (isPlayerPositionNotChanged(playerData)) {
@@ -58,7 +58,7 @@ public class AntiAFKThread extends BukkitRunnable {
         setPlayerList();
         if (!playerDataList.isEmpty()) {
             for (PlayerData playerData : playerDataList) {
-                if (playerData.getPlayer().isOnline()) {
+                if (playerData.player.isOnline()) {
                     takeCareOfPlayer(playerData);
                 } else {
                     playersManager.deletePlayer(playerData);
@@ -79,18 +79,18 @@ class Reminder extends BukkitRunnable {
     }
 
     private boolean isPlayerPositionNotChanged(PlayerData playerData) {
-        Player player = playerData.getPlayer();
-        return player.getLocation().getX() == playerData.getX() &&
-                player.getLocation().getZ() == playerData.getZ();
+        Player player = playerData.player;
+        return player.getLocation().getX() == playerData.x &&
+                player.getLocation().getZ() == playerData.z;
     }
 
     public void run() {
         if (isPlayerPositionNotChanged(playerData)) {
             if (!isKickable) {
-                playerData.getPlayer().playSound(playerData.getPlayer().getLocation(), Sound.ENTITY_ENDERDRAGON_AMBIENT, 1, 1);
-                playerData.getPlayer().sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a");
+                playerData.player.playSound(playerData.player.getLocation(), Sound.ENTITY_ENDERDRAGON_AMBIENT, 1, 1);
+                playerData.player.sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a");
             } else {
-                playerData.getPlayer().kickPlayer(ChatColor.GREEN + "Zostales wyrzucony/a za bycie AFK");
+                playerData.player.kickPlayer(ChatColor.GREEN + "Zostales wyrzucony/a za bycie AFK");
                 playersManager.deletePlayer(playerData);
             }
         }
