@@ -20,14 +20,14 @@ public class AntiAFK extends JavaPlugin {
     public void onEnable() {
         // Plugin startup logic
         plugin = this;
-        getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "[AntiAFK] Plugin is enabled");
+        getLogger().info(ChatColor.GREEN + "[AntiAFK] Plugin is enabled");
         getServer().getPluginManager().registerEvents(new AntiAFKEvents(), this);
         PlayersManager.run();
     }
     @Override
     public void onDisable() {
         // Plugin shutdown logic
-        getServer().getConsoleSender().sendMessage(ChatColor.RED + "[AntiAFK] Plugin is disabled");
+        getLogger().info(ChatColor.RED + "[AntiAFK] Plugin is disabled");
     }
 }
 
