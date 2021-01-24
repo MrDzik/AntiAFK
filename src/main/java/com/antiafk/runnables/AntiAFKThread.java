@@ -2,13 +2,11 @@ package com.antiafk.runnables;
 
 import com.antiafk.AntiAFK;
 import com.antiafk.managers.AntiAFKPlayersManager;
-import org.bukkit.ChatColor;
 import org.bukkit.Location;
-import org.bukkit.Sound;
-import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import com.antiafk.objects.PlayerData;
+
 import java.util.List;
 
 public class AntiAFKThread extends BukkitRunnable {
@@ -47,7 +45,7 @@ public class AntiAFKThread extends BukkitRunnable {
                             for (int i = 0; i < 16; i += 3) {
                                 if (i == 15)
                                     isKickable = true;
-                                new Reminder(playerData, isKickable).runTaskLater(AntiAFK.getMainPlugin(), i * 20L);
+                                new AntiAFKReminder(playerData, isKickable).runTaskLaterAsynchronously(AntiAFK.getMainPlugin(), i * 20L);
                             }
                         } else {
                             updatePlayerPosition(playerData, loc);
