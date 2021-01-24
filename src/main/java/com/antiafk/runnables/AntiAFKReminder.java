@@ -8,12 +8,12 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.scheduler.BukkitRunnable;
 
-class Reminder extends BukkitRunnable {
+class AntiAFKReminder extends BukkitRunnable {
     private final PlayerData playerData;
     private final boolean isKickable;
     private final AntiAFKPlayersManager playersManager = AntiAFK.getPlayersManager();
 
-    public Reminder(PlayerData playerData, boolean isKickable) {
+    public AntiAFKReminder(PlayerData playerData, boolean isKickable) {
         this.playerData = playerData;
         this.isKickable = isKickable;
     }
@@ -30,7 +30,7 @@ class Reminder extends BukkitRunnable {
                 playerData.player.playSound(loc, Sound.ENTITY_ENDERDRAGON_AMBIENT, 1, 1);
                 playerData.player.sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a");
             } else {
-                playerData.player.kickPlayer(ChatColor.GREEN + "Zostales wyrzucony/a za bycie AFK");
+                new AntiAFKKick(playerData).runTask(AntiAFK.getMainPlugin());
                 playersManager.deletePlayer(playerData);
             }
         }
