@@ -11,11 +11,9 @@ import java.util.List;
 public class AntiAFKPlayersManager {
     public List<PlayerData> PlayerList1 = new ArrayList<>();
     public List<PlayerData> PlayerList2 = new ArrayList<>();
-
     private List getPlayerListWithLowerSize(){
         return (PlayerList1.size() <= PlayerList2.size()) ? PlayerList1 : PlayerList2;
     }
-
     public void addPlayer(Player player) {
         PlayerData playerData = new PlayerData(player);
         getPlayerListWithLowerSize().add(playerData);
@@ -27,9 +25,8 @@ public class AntiAFKPlayersManager {
             PlayerList2.remove(player);
         }
     }
-
     public void run() {
-        new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, 180 * 20);
-        new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, 180 * 20);
+        new AntiAFKThread(1).runTaskTimerAsynchronously(AntiAFK.getMainPlugin(), 0, 30 * 20);
+        new AntiAFKThread(2).runTaskTimerAsynchronously(AntiAFK.getMainPlugin(), 5 * 20, 30 * 20);
     }
 }
