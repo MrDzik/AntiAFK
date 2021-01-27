@@ -28,7 +28,7 @@ class AntiAFKReminder extends BukkitRunnable {
         if (isPlayerPositionNotChanged(playerData, loc)) {
             if (!isKickable) {
                 playerData.player.playSound(loc, Sound.ENTITY_ENDERDRAGON_AMBIENT, 1, 1);
-                playerData.player.sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a");
+                playerData.player.sendMessage(ChatColor.YELLOW + "[AntiAFK] Rusz sie albo zostaniesz wyrzucony/a!");
             } else {
                 new AntiAFKKick(playerData).runTask(AntiAFK.getMainPlugin());
                 playersManager.deletePlayer(playerData);

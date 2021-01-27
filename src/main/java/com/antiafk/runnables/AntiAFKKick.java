@@ -10,6 +10,6 @@ public class AntiAFKKick extends BukkitRunnable {
         this.playerData = playerData;
     }
     public void run() {
-        playerData.player.kickPlayer(ChatColor.GREEN + "Zostales wyrzucony/a za bycie AFK");
+        playerData.player.kickPlayer(ChatColor.RED + "Zostales wyrzucony/a za bycie AFK!");
     }
 }
