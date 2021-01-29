@@ -1,6 +1,8 @@
 package com.antiafk.managers;
 
 import com.antiafk.AntiAFK;
+import com.antiafk.objects.Config;
+import com.antiafk.objects.ConfigReader;
 import com.antiafk.runnables.AntiAFKThread;
 import com.antiafk.objects.PlayerData;
 import org.bukkit.entity.Player;
@@ -27,7 +29,9 @@ public class AntiAFKPlayersManager {
     }
 
     public void run() {
-        new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, 180 * 20);
-        new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, 180 * 20);
+        Config config = new ConfigReader().readOrReturnDefault();
+        long timeToKick = config.getTimeToKick();
+        new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, timeToKick * 20);
+        new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, timeToKick * 20);
     }
 }
