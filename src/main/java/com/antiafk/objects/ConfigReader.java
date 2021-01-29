@@ -5,7 +5,7 @@ import java.io.FileReader;
 import org.json.simple.parser.JSONParser;
 
 public class ConfigReader {
-    private final String PATH = "";
+    private final String PATH = "AntiAFK\\config.json";
 
     private JSONObject readJSON() throws Exception {
         JSONParser parser = new JSONParser();
