@@ -1,10 +1,8 @@
 package com.antiafk.managers;
 
 import com.antiafk.AntiAFK;
-import com.antiafk.objects.Config;
-import com.antiafk.objects.ConfigReader;
+import com.antiafk.objects.*;
 import com.antiafk.runnables.AntiAFKThread;
-import com.antiafk.objects.PlayerData;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
