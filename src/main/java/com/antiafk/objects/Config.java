@@ -1,17 +1,17 @@
 package com.antiafk.objects;
 
 public class Config {
-    private long timeToKick;
+    private long secondsToKick;
 
-    public long getTimeToKick() {
-        return this.timeToKick;
+    public long getSecondsToKick() {
+        return this.secondsToKick;
     }
-    public void setTimeToKick(long timeToKick) {
-        this.timeToKick = timeToKick;
+    public void setSecondsToKick(long secondsToKick) {
+        this.secondsToKick = secondsToKick;
     }
     public static Config getDefault(){
         Config config = new Config();
-        config.setTimeToKick(180);
+        config.setSecondsToKick(180);
         return config;
     }
 }

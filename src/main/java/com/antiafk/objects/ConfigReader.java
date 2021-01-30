@@ -23,7 +23,7 @@ public class ConfigReader {
             JSONObject jsonObject = readJSON();
             Config config = new Config();
             long timeToKick = (long)jsonObject.get("TimeToKick");
-            config.setTimeToKick(timeToKick);
+            config.setSecondsToKick(timeToKick);
             return config;
         }
         catch (Exception e){

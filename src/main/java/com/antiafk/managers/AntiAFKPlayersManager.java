@@ -30,8 +30,8 @@ public class AntiAFKPlayersManager {
 
     public void run() {
         Config config = new ConfigReader().readOrReturnDefault();
-        long timeToKick = config.getTimeToKick();
-        new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, timeToKick * 20);
-        new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, timeToKick * 20);
+        long secondsToKick = config.getSecondsToKick();
+        new AntiAFKThread(1).runTaskTimer(AntiAFK.getMainPlugin(), 0, secondsToKick * 20);
+        new AntiAFKThread(2).runTaskTimer(AntiAFK.getMainPlugin(), 5 * 20, secondsToKick * 20);
     }
 }
