@@ -6,7 +6,6 @@ import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 import java.util.ArrayList;
 import com.antiafk.objects.PlayerData;
-
 import java.util.List;
 
 public class AntiAFKThread extends BukkitRunnable {
