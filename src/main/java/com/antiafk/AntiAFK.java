@@ -1,4 +1,5 @@
 package com.antiafk;
+
 import com.antiafk.events.AntiAFKEvents;
 import com.antiafk.managers.AntiAFKPlayersManager;
 import org.bukkit.ChatColor;
