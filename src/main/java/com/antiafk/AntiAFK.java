@@ -31,4 +31,3 @@ public class AntiAFK extends JavaPlugin {
         getLogger().info(ChatColor.RED + "[AntiAFK] Plugin is disabled");
     }
 }
-
